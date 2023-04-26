@@ -41,6 +41,20 @@ router.post('/createUserCrypted', upload.any('image'), async (req, res) => {
 
 //**************Login user**************
 
+// function verifyToken(req, res, next) {
+//     const authHeader = req.headers['authorization'];
+//     const token = authHeader && authHeader.split(' ')[1];
+//     if (!token) return res.status(401).send('Access Denied');
+  
+//     try {
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//       req.user = decoded;
+//       next();
+//     } catch (err) {
+//       res.status(400).send('Invalid Token');
+//     }
+//   }
+
 router.post('/login',async(req,res)=>{
     data=req.body;
     user=await User.findOne({emailUsr:data.emailUsr});
@@ -62,6 +76,23 @@ router.post('/login',async(req,res)=>{
         }
     }
 })
+
+
+router.get('/protected-page', (req, res) => {
+  // Récupérer le token de l'en-tête de la requête
+  const token = req.headers.authorization.split(' ')[1];
+
+  // Vérifier le token
+  jwt.verify(token, '1234567', (err, decoded) => {
+    if (err) {
+      res.status(401).send('Token invalide');
+    } else {
+      // Si le token est valide, vous pouvez renvoyer les informations utilisateur
+      res.status(200).send(`Bienvenue ${decoded.fName}`);
+    }
+  });
+});
+
 
 
 

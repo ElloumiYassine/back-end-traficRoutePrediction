@@ -6,43 +6,38 @@ const csv = require('csv-parser');
 
 /**********************************Functions Call**************************************/
 
-// const adjacencyList=require('./fonction/adjancencyList')
-// const searchRoutes=require('./fonction/searchRoutes')
-// const predictionSystem=require('./fonction/predictionSystem')
+const adjacencyList = require('./fonction/adjancencyList')
+const findAllPaths=require('./fonction/findAllPaths')
+//const predictionSystem=require('./fonction/predictionSystem')
 
 /*************************************************************************************/
 
-// const allRoutes = [];
-// console.log(adjacencyList);
-// startPoint='4333'
-// endPoint='4337'
 
-// const routes = searchRoutes(adjacencyList,startPoint, endPoint);
-// //const predictedVal=predictionSystem('path','fichCSV')
-// console.log(routes);
-
-
-/**************************************************************************** */
-
-router.get('/start&endPoint', async (req, res) => {
+/*************************************************************************************/
+router.post('/start&endPoint', async (req, res) => {
     try {
+        paths = []
         data = req.body
         const rte = new Route(data)
         rte.sysTime = new Date()
         console.log(rte);
-        console.log(adjacencyList);
-        searchRoutes(rte.startPoint, [rte.startPoint], allRoutes, rte.endPointn, adjacencyList);
-        //console.log(allRoutes);
-        console.log(routes);
-        // const { startPoint, endPoint } = req.body;
-        // const routes = await findRoutes(rte.startPoint, rte.endPointn);
-        res.status(200).send(routes);
+        const adjacencyList = require('./fonction/adjancencyList')
+        // console.log(adjacencyList);
+        startPoint = String(rte.startPoint)
+        endPoint = String(rte.endPoint)
+        console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+
+       const paths_link= findAllPaths(adjacencyList, startPoint, endPoint)
+
+
+
+        console.log("alooooooooooooooooo************************************************************************");
+        console.log(paths_link);
+        res.status(200).send(paths_link);
 
     } catch (error) {
         res.status(400).send(error)
     }
 })
-
-
 
 module.exports = router

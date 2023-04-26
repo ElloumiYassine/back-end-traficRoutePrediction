@@ -95,7 +95,7 @@ router.put('/update/:id', async (req, res) => {
         res.send(error)
     }
 })
-/*********************update user from id ************************* */
+/*********************delete user from id ************************* */
 router.delete('/deleteById/:id', async (req, res) => {
     id = req.params.id
     try {
