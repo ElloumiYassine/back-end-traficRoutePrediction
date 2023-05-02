@@ -7,7 +7,8 @@ const csv = require('csv-parser');
 /**********************************Functions Call**************************************/
 
 const adjacencyList = require('./fonction/adjancencyList')
-const findAllPaths=require('./fonction/findAllPaths')
+const findAllPaths = require('./fonction/findAllPaths')
+const addLNGLAT = require("./fonction/addLNGLAT")
 //const predictionSystem=require('./fonction/predictionSystem')
 
 /*************************************************************************************/
@@ -26,13 +27,10 @@ router.post('/start&endPoint', async (req, res) => {
         startPoint = String(rte.startPoint)
         endPoint = String(rte.endPoint)
         console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-
-       const paths_link= findAllPaths(adjacencyList, startPoint, endPoint)
-
-
-
+        const paths_link = findAllPaths(adjacencyList, startPoint, endPoint)
+        const paths_link_lng_lat=addLNGLAT(paths_link)
         console.log("alooooooooooooooooo************************************************************************");
-        console.log(paths_link);
+      //  console.log(paths_link);
         res.status(200).send(paths_link);
 
     } catch (error) {
